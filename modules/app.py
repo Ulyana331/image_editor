@@ -40,20 +40,5 @@ class App(ctk.CTk):
                                                   border_color = "#E8900C",
                                                   corner_radius = 15)
         self.FRAME_IMAGE.place(x = 210, y = 20)
-
-# url = 'https://i.ytimg.com/vi/vEYsdh6uiS4/maxresdefault.jpg'
- 
-# try:
-#     resp = requests.get(url, stream=True).raw
-# except requests.exceptions.RequestException as e:  
-#     sys.exit(1)
- 
-# try:
-#     img = Image.open(resp)
-# except IOError:
-#     print("Unable to open image")
-#     sys.exit(1)
- 
-# img.save('sid.jpg', 'jpeg')
-
+        
 app = App(850, 500)
