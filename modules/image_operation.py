@@ -111,15 +111,16 @@ entry = ctk.CTkEntry(
     border_color = "#E8900C",
     textvariable = text
 )
-entry.place(x = 15, y = 40)
+entry.place(x = 15, y = 30)
 label_url = ctk.CTkLabel(master = m_app.app, text = "Введите ссылку")
-label_url.place(x = 20, y = 10)
+label_url.place(x = 20, y = 0)
 
 
 count = 1
 def download_image():
     global image
     global count
+    global label_image
     url1 = text.get()
     try:
         req = requests.get(url1, stream = True).raw
@@ -132,20 +133,21 @@ def download_image():
     try:
         image.save(f"images/img.jpg, " "jpeg")
         images_path = ctk.CTkImage(light_image = Image.open(m_path.search_path(f"images/img.jpg")), size = (607,393))
-        label = ctk.CTkLabel(master = m_app.app.FRAME_IMAGE,
+        label_image = ctk.CTkLabel(master = m_app.app.FRAME_IMAGE,
                              image = images_path,
                              text = "")
-        label.place(x = 5, y = 200, anchor = ctk.W)
+        label_image.place(x = 5, y = 200, anchor = ctk.W)
         info_image()
         # count += 1
     except:
         image.save(f"images/img.png", "png")
         images_path = ctk.CTkImage(light_image = Image.open(m_path.search_path(f"images/img.png")), size = (607,393))
-        label = ctk.CTkLabel(master = m_app.app.FRAME_IMAGE,
+        label_image = ctk.CTkLabel(master = m_app.app.FRAME_IMAGE,
                              image = images_path,
                              text = "")
-        label.place(x = 5, y = 200, anchor = ctk.W)
+        label_image.place(x = 5, y = 200, anchor = ctk.W)
         info_image()
+        
 def get_selected_value():
     get_value = listbox.get(listbox.curselection())
 values = ["1", "2", "3"]
@@ -155,6 +157,7 @@ for value in values:
 listbox.place(x = 20, y = 15)
 
 def picture():
+    global label_image
     try:
         image = Image.open("images/img.png")
     except IOError:
@@ -162,7 +165,47 @@ def picture():
         sys.exit(1)
     grayscale = image.convert('L')
     image_tk = ImageTk.PhotoImage(grayscale)
-    label = ctk.CTkLabel(master = m_app.app.FRAME_IMAGE,
+    label_image = ctk.CTkLabel(master = m_app.app.FRAME_IMAGE,
                              image = image_tk,
                              text = "")
-    label.place(x = 5, y = 10)
+    label_image.place(x = 5, y = 10)
+
+entry_width = ctk.IntVar()
+entry_w = ctk.CTkEntry(
+    master = m_app.app,
+    width = 80,
+    height = 40,
+    fg_color = "#1E1E1E",
+    text_color = "white",
+    border_color = "#E8900C",
+    textvariable = entry_width)
+
+entry_w.place(x = 15, y = 100)
+
+entry_height = ctk.IntVar()
+entry_H = ctk.CTkEntry(
+    master = m_app.app,
+    width = 80,
+    height = 40,
+    fg_color = "#1E1E1E",
+    text_color = "white",
+    border_color = "#E8900C",
+    textvariable = entry_height)
+
+entry_H.place(x = 110, y = 100)
+
+label = ctk.CTkLabel(master = m_app.app, text = "Введите размеры")
+label.place(x = 15, y = 70)
+
+# height = entry_height.get()
+# width = entry_width.get()
+def resize():
+    global label_image
+    height = entry_height.get()
+    width = entry_width.get()
+    image = Image.open("images/img.png")
+    resized = image.resize((width, height), Image.ANTIALIAS)
+    tk_image = ImageTk.PhotoImage(resized)
+    label_image.destroy()
+    label_image = ctk.CTkLabel(master = m_app.app.FRAME_IMAGE, text = "", image = tk_image)
+    label_image.place(x = 20, y = 10)

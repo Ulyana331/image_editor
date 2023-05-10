@@ -16,12 +16,12 @@ class App(ctk.CTk):
         self.FRAME_LIST_IMAGES = m_frame.My_Frame(text = "", 
                                                   master = self,
                                                   width = 173, 
-                                                  height = 190,
+                                                  height = 130,
                                                   border_width = 5,
                                                   fg_color = "#1E1E1E",
                                                   border_color = "#E8900C",
                                                   corner_radius = 15)
-        self.FRAME_LIST_IMAGES.place(x = 20, y = 80)
+        self.FRAME_LIST_IMAGES.place(x = 20, y = 150)
         self.FRAME_INFO_IMAGE = m_frame.My_Frame(text = "", 
                                                   master = self,
                                                   width = 173, 
