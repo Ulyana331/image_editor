@@ -62,6 +62,7 @@ button5 = ctk.CTkButton(
     corner_radius = 15,
     fg_color = "#1E1E1E",
     text = "",
+    command = m_operation.picture
 )
 button5.place(x = 720, y = 438)
 
