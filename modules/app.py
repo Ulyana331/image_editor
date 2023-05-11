@@ -1,7 +1,4 @@
 import customtkinter as ctk
-from PIL import Image
-import requests
-import sys
 import modules.frame as m_frame
 class App(ctk.CTk):
     def __init__(self, app_width, app_height):
@@ -16,21 +13,21 @@ class App(ctk.CTk):
         self.FRAME_LIST_IMAGES = m_frame.My_Frame(text = "", 
                                                   master = self,
                                                   width = 173, 
-                                                  height = 130,
+                                                  height = 100,
                                                   border_width = 5,
                                                   fg_color = "#1E1E1E",
                                                   border_color = "#E8900C",
                                                   corner_radius = 15)
-        self.FRAME_LIST_IMAGES.place(x = 20, y = 150)
+        self.FRAME_LIST_IMAGES.place(x = 20, y = 215)
         self.FRAME_INFO_IMAGE = m_frame.My_Frame(text = "", 
                                                   master = self,
                                                   width = 173, 
-                                                  height = 120,
+                                                  height = 90,
                                                   border_width = 5,
                                                   fg_color = "#1E1E1E",
                                                   border_color = "#E8900C",
                                                   corner_radius = 15)
-        self.FRAME_INFO_IMAGE.place(x = 20, y = 300)
+        self.FRAME_INFO_IMAGE.place(x = 20, y = 330)
         self.FRAME_IMAGE = m_frame.My_Frame(text = "", 
                                                   master = self,
                                                   width = 619, 

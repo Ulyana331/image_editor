@@ -50,7 +50,8 @@ button4 = ctk.CTkButton(
     border_color = "#E8900C",
     corner_radius = 15,
     fg_color = "#1E1E1E",
-    text = "",
+    text = "Писать",
+    command = m_operation.write
 )
 button4.place(x = 540, y = 438)
 
@@ -62,8 +63,8 @@ button5 = ctk.CTkButton(
     border_color = "#E8900C",
     corner_radius = 15,
     fg_color = "#1E1E1E",
-    text = "",
-    command = m_operation.picture
+    text = "Фильтр",
+    command = m_operation.get_selected_value
 )
 button5.place(x = 650, y = 438)
 
