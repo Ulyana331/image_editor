@@ -11,10 +11,10 @@ button1 = ctk.CTkButton(
     border_color = "#E8900C",
     corner_radius = 15,
     fg_color = "#1E1E1E",
-    text = "Обрезка фото",
+    text = "Обрізка фото",
     command = m_operation.crop_image
 )
-button1.place(x = 140, y = 438)
+button1.place(x = 175, y = 438)
 
 button2 = ctk.CTkButton(
     master = m_app.app,
@@ -24,10 +24,10 @@ button2 = ctk.CTkButton(
     border_color = "#E8900C",
     corner_radius = 15,
     fg_color = "#1E1E1E",
-    text = "Изменение размера",
+    text = "Зміна розміру",
     command = m_operation.resize
 )
-button2.place(x = 260, y = 438)
+button2.place(x = 295, y = 438)
 
 button3 = ctk.CTkButton(
     master = m_app.app,
@@ -37,10 +37,10 @@ button3 = ctk.CTkButton(
     border_color = "#E8900C",
     corner_radius = 15,
     fg_color = "#1E1E1E",
-    text = "Рисовать",
-    command = m_operation.draw_pictures
+    text = "Малювати",
+    # command = m_operation.draw_pictures
 )
-button3.place(x = 425, y = 438)
+button3.place(x = 420, y = 438)
 
 button4 = ctk.CTkButton(
     master = m_app.app,
@@ -50,10 +50,10 @@ button4 = ctk.CTkButton(
     border_color = "#E8900C",
     corner_radius = 15,
     fg_color = "#1E1E1E",
-    text = "Писать",
+    text = "Писати",
     command = m_operation.write
 )
-button4.place(x = 540, y = 438)
+button4.place(x = 535, y = 438)
 
 button5 = ctk.CTkButton(
     master = m_app.app,
@@ -63,7 +63,7 @@ button5 = ctk.CTkButton(
     border_color = "#E8900C",
     corner_radius = 15,
     fg_color = "#1E1E1E",
-    text = "Фильтр",
+    text = "Фільтри",
     command = m_operation.get_selected_value
 )
 button5.place(x = 650, y = 438)
@@ -76,7 +76,9 @@ button6 = ctk.CTkButton(
     border_color = "#E8900C",
     corner_radius = 15,
     fg_color = "#D9D9D9",
-    text = ""
+    text = "<",
+    text_color = "black",
+    command = m_operation.previous_image
 )
 button6.place(x = 428, y = 364)
 
@@ -89,7 +91,8 @@ button7 = ctk.CTkButton(
     corner_radius = 15,
     fg_color = "#D9D9D9",
     text = ">",
-    text_color = "black"
+    text_color = "black",
+    command = m_operation.next_image
 )
 button7.place(x = 527, y = 364)
 
@@ -102,10 +105,10 @@ button8 = ctk.CTkButton(
     border_color = "#E8900C",
     corner_radius = 15,
     fg_color = "#1E1E1E",
-    text = "Загрузка фото",
+    text = "Завантажити фото",
     command = m_operation.download_image
 )
-button8.place(x = 10,y = 438)
+button8.place(x = 20,y = 438)
 
 button_rotate = ctk.CTkButton(
     master = m_app.app,
@@ -118,6 +121,5 @@ button_rotate = ctk.CTkButton(
     text = "",
     image = ctk.CTkImage(light_image=Image.open("images/rotate.png"),size = (30, 30)),
     command = m_operation.rotated
-
 )
 button_rotate.place(x = 770,y = 438)

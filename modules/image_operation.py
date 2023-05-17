@@ -10,12 +10,12 @@ import modules.font as m_font
 # Получаем информацию по изображению (формат)
 def info_image():
     image_format = image.format
-    label_info = ctk.CTkLabel(master = m_app.app.FRAME_INFO_IMAGE, text = "Format: {}".format(image_format))
+    label_info = ctk.CTkLabel(master = m_app.app.FRAME_INFO_IMAGE, font = m_font.font_info, text = "Format: {}".format(image_format))
     label_info.place(x = 10, y = 25)
 
     # Получаем информацию по изображению (высота и ширина)
     width, height = image.size
-    label_info = ctk.CTkLabel(master = m_app.app.FRAME_INFO_IMAGE, text = "width:{} height:{}".format(width, height))
+    label_info = ctk.CTkLabel(master = m_app.app.FRAME_INFO_IMAGE, font = m_font.font_info, text = "width:{} height:{}".format(width, height))
     label_info.place(x = 8, y = 55)
 
 def crop_image():
@@ -23,44 +23,51 @@ def crop_image():
     global label_image
     global tk_image
     # image = Image.open('images/img.png')
-    image = image.crop((0,80,120,100))
+    image = image.crop((100, 100, 400, 300))
     label_image.destroy()
     tk_image = ImageTk.PhotoImage(image)
     label_image = ctk.CTkLabel(master = m_app.app.FRAME_IMAGE, text = "", image = tk_image)
     label_image.place(x = 20,y = 10)
 
+def write():
+    global image
+    global label_image
+    global tk_image
+    try:
+        image = Image.open("images/img.png")
+    except:
+        print("Unable to load image")
+        sys.exit(1)
+    write = text2.get()
+    idraw = ImageDraw.Draw(image)
+    text = write
+    font = ImageFont.truetype("arial.ttf", size=36)
+    
+    idraw.text((10, 10), text, font=font)
+    tk_image = ImageTk.PhotoImage(image)
+    label_image.destroy()
+
+    label_image = ctk.CTkLabel(master = m_app.app.FRAME_IMAGE, text = "", image = tk_image)
+    label_image.place(x = 5, y = 10)
+
 def rotated():
     global image
     global label_image
     global tk_image
+    label_image.destroy()
     try:
         image = Image.open("images/img.png")
     except IOError:
         print("Unable to load image")
         sys.exit(1)
         
-    image = image.rotate(180)
-    image.save('images/img.png', size = (607, 393))
+    image = image.rotate(180, expand = True)
+    image.save('images/img.png')
     tk_image = ImageTk.PhotoImage(image)
 
-    # label_image.destroy()
     label_image = ctk.CTkLabel(master = m_app.app.FRAME_IMAGE, text = "", image = tk_image)
-    # label_image.place(x = 20,y = 10, anchor = ctk.W) 
-    label_image.place(x = 5, y = 200, anchor = ctk.W) 
+    label_image.place(x = 5, y = 200, anchor = ctk.W)
 
-
-def draw_pictures():
-    global image
-    global label_image
-    global tk_image
-    # Создаем белый квадрат
-    image = Image.new('RGBA', (200, 200), 'white')    
-    idraw = ImageDraw.Draw(image)
-    
-    idraw.rectangle((10, 10, 100, 100), fill='red')
-    tk_image = ImageTk.PhotoImage(image)
-    label_image = ctk.CTkLabel(master = m_app.app.FRAME_IMAGE, text = "", image = tk_image)
-    label_image.place(x = 20,y = 10)
 
 # функция написания текста на экране
 text2 = ctk.StringVar()
@@ -73,37 +80,10 @@ entry_write = ctk.CTkEntry(
     border_color = "#E8900C",
     textvariable = text2 
 )
-write = entry_write.get()
-
 entry_write.place(x = 15, y = 165)
-label = ctk.CTkLabel(master = m_app.app, text = "Введите надпись")
-label.place(x = 15, y = 135)
-def write():
-    global image
-    global label_image
-    global tk_image
-    try:
-        image = Image.open("images/img.jpg")
-    except:
-        print("Unable to load image")
-        sys.exit(1)
-        
-    idraw = ImageDraw.Draw(image)
-    text = write
-    font = ImageFont.truetype("arial.ttf", size=36)
-    
-    idraw.text((10, 10), text, font=font)
-    tk_image = ImageTk.PhotoImage(image)
-    label_image.destroy()
+label = ctk.CTkLabel(master = m_app.app, text = "Введіть напис:")
+label.place(x = 15, y = 135) 
 
-    label_image = ctk.CTkLabel(master = m_app.app.FRAME_IMAGE, text = "", image = tk_image)
-    label_image.place(x = 5, y = 200, anchor = ctk.W)
-# 
-
-# https://w.forfun.com/fetch/70/703e3aefd9500eff0f63294bc383ac2a.jpeg
-# https://klike.net/uploads/posts/2019-11/1572612050_1.jpg
-# https://cameralabs.org/media/camera/noiabr/23/53_faab6d80ccb84bd6529017d21e2ea8d5.jpg
-# (0, 80, 200, 400)
 list_url = []
 
 text = ctk.StringVar()
@@ -117,7 +97,7 @@ entry = ctk.CTkEntry(
     textvariable = text
 )
 entry.place(x = 15, y = 25)
-label_url = ctk.CTkLabel(master = m_app.app, text = "Введите ссылку")
+label_url = ctk.CTkLabel(master = m_app.app, text = "Введіть посилання:")
 label_url.place(x = 20, y = -5)
 
 
@@ -126,6 +106,7 @@ def download_image():
     global image
     global count
     global label_image
+    global url1
     url1 = text.get()
     try:
         req = requests.get(url1, stream = True).raw
@@ -136,34 +117,40 @@ def download_image():
         print("Unable to load image from URL")
     
     try:
-        image.save(f"images/img.jpg, " "jpeg")
-        images_path = ctk.CTkImage(light_image = Image.open(m_path.search_path(f"images/img.jpg")), size = (607,393))
+        image.save(f"images/img.jpg", "jpeg")
+        image_path = ctk.CTkImage(light_image = Image.open(m_path.search_path(f"images/img.jpg")), size = (607,393))        
         label_image = ctk.CTkLabel(master = m_app.app.FRAME_IMAGE,
-                             image = images_path,
+                             image = image,
                              text = "")
         label_image.place(x = 5, y = 200, anchor = ctk.W)
+        label_image.destroy()
         info_image()
         # count += 1
     except:
         image.save(f"images/img.png", "png")
         images_path = ctk.CTkImage(light_image = Image.open(m_path.search_path(f"images/img.png")), size = (607,393))
+        
         label_image = ctk.CTkLabel(master = m_app.app.FRAME_IMAGE,
                              image = images_path,
                              text = "")
         label_image.place(x = 5, y = 200, anchor = ctk.W)
         info_image()
-        
+        # label_image.destroy()
+
+label_filters = ctk.CTkLabel(master = m_app.app.FRAME_LIST_IMAGES, text = "Оберіть фільтр:")
+label_filters.place(x=10,y=5)    
 def get_selected_value():
     global get_value
     global image
     global label_image
     get_value = listbox.get(listbox.curselection())
     if get_value == values[0]:
-        try:
-            image = Image.open("images/img.png")
-        except IOError:
-            print("Unable to load image")
-            sys.exit(1)
+        # try:
+        #     image = Image.open("images/img.png")
+        # except IOError:
+        #     print("Unable to load image")
+        #     sys.exit(1)
+        image = Image.open('images/img.png')
         grayscale = image.convert('L')
         image_tk = ImageTk.PhotoImage(grayscale)
         label_image.destroy()
@@ -172,8 +159,7 @@ def get_selected_value():
                                 text = "")
         label_image.place(x = 5, y = 10)
     if get_value == values[1]:
-        # image = Image.open('img.png')
-        download_image()
+        image = Image.open('images/img.png')
         blurred_img = image.filter(ImageFilter.BLUR)
         tk_image = ImageTk.PhotoImage(blurred_img)
         label_image.destroy()
@@ -183,8 +169,7 @@ def get_selected_value():
         label_image.place(x = 5, y = 200, anchor = ctk.W)
 
     if get_value == values[2]:
-        # image = Image.open('img.png')
-        download_image()
+        image = Image.open('images/img.png')
         detailed_img = image.filter(ImageFilter.DETAIL)
         tk_image = ImageTk.PhotoImage(detailed_img)
         label_image.destroy()
@@ -193,7 +178,7 @@ def get_selected_value():
                              text = "")
         label_image.place(x = 5, y = 200, anchor = ctk.W)
     print(get_value)
-values = ["Серое фото", "Blur", "Detail"]
+values = ["Gray", "Blur", "Detail"]
 listbox = Listbox(m_app.app.FRAME_LIST_IMAGES, font = m_font.font_list)
 for value in values:
     listbox.insert(END, value)
@@ -223,16 +208,55 @@ entry_H = ctk.CTkEntry(
 
 entry_H.place(x = 110, y = 95)
 
-label = ctk.CTkLabel(master = m_app.app, text = "Введите размеры")
+label = ctk.CTkLabel(master = m_app.app, text = "Введіть розміри:")
 label.place(x = 15, y = 65)
 
 def resize():
     global label_image
     height = entry_height.get()
     width = entry_width.get()
+    label_image.destroy()
     image = Image.open("images/img.png")
     resized = image.resize((width, height), Image.ANTIALIAS)
     tk_image = ImageTk.PhotoImage(resized)
-    label_image.destroy()
+    
     label_image = ctk.CTkLabel(master = m_app.app.FRAME_IMAGE, text = "", image = tk_image)
     label_image.place(x = 20, y = 10)
+current_index = 0
+def next_image():
+    global current_index
+    current_index = current_index + 1 % len(list_url)
+    # download_image()
+    update_images()
+
+def previous_image():
+    global current_index
+    current_index = current_index - 1 % len(list_url)
+    # download_image()
+    update_images()
+    
+def update_images():
+    global label_image
+    #расположение текста по иксу
+    textx = 10
+    # расположение текста по игрику
+    texty = 10
+    # перебираем все виджеты которые находяться на фрейме 
+    for widget in m_app.app.FRAME_IMAGE.winfo_children():
+        widget.destroy()
+    # перебираем все виджеты которые находяться на другом фрейме 
+    
+    # for widget in m_app.app.FRAME_CURR_TRACK.winfo_children():
+    #     widget.destroy()
+    
+    # перебираем список и выводим изображения на фрейм
+    for i, image in enumerate(list_url):
+        label = ctk.CTkLabel(
+        master = m_app.app.FRAME_IMAGE, 
+        text = f"{image}", 
+        text_color = "black")
+        label.place(x = textx, y = texty)
+        texty = texty + 30
+    for link in list_url:
+        image = Image.open(url1) 
+        list_url.append(ImageTk.PhotoImage(image))
