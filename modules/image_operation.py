@@ -6,12 +6,15 @@ import modules.app as m_app
 import modules.path as m_path
 from tkinter import Listbox, END
 import modules.font as m_font
+from io import BytesIO
 
 # Получаем информацию по изображению (формат)
+label_info_image = ctk.CTkLabel(master = m_app.app.FRAME_INFO_IMAGE, font = m_font.font_info, text = "Інформація фотографії:")
+label_info_image.place(x = 10, y = 5)
 def info_image():
     image_format = image.format
     label_info = ctk.CTkLabel(master = m_app.app.FRAME_INFO_IMAGE, font = m_font.font_info, text = "Format: {}".format(image_format))
-    label_info.place(x = 10, y = 25)
+    label_info.place(x = 10, y = 28)
 
     # Получаем информацию по изображению (высота и ширина)
     width, height = image.size
@@ -22,7 +25,8 @@ def crop_image():
     global image
     global label_image
     global tk_image
-    # image = Image.open('images/img.png')
+    label_image = ctk.CTkLabel(master = m_app.app.FRAME_IMAGE, text = "")
+    label_image.place(x = 20, y = 10)
     image = image.crop((100, 100, 400, 300))
     label_image.destroy()
     tk_image = ImageTk.PhotoImage(image)
@@ -33,6 +37,8 @@ def write():
     global image
     global label_image
     global tk_image
+    label_image = ctk.CTkLabel(master = m_app.app.FRAME_IMAGE, text = "")
+    label_image.place(x = 20, y = 10)
     try:
         image = Image.open("images/img.png")
     except:
@@ -48,13 +54,14 @@ def write():
     label_image.destroy()
 
     label_image = ctk.CTkLabel(master = m_app.app.FRAME_IMAGE, text = "", image = tk_image)
-    label_image.place(x = 5, y = 10)
+    label_image.place(x = 5, y = 0)
 
 def rotated():
     global image
     global label_image
     global tk_image
-    label_image.destroy()
+    label_image = ctk.CTkLabel(master = m_app.app.FRAME_IMAGE, text = "")
+    label_image.place(x = 20, y = 10)
     try:
         image = Image.open("images/img.png")
     except IOError:
@@ -118,24 +125,22 @@ def download_image():
     
     try:
         image.save(f"images/img.jpg", "jpeg")
-        image_path = ctk.CTkImage(light_image = Image.open(m_path.search_path(f"images/img.jpg")), size = (607,393))        
+        image_path = ctk.CTkImage(light_image = Image.open(m_path.search_path(f"images/img.jpg")), size = (619,410))        
         label_image = ctk.CTkLabel(master = m_app.app.FRAME_IMAGE,
                              image = image,
                              text = "")
         label_image.place(x = 5, y = 200, anchor = ctk.W)
         label_image.destroy()
         info_image()
-        # count += 1
     except:
         image.save(f"images/img.png", "png")
-        images_path = ctk.CTkImage(light_image = Image.open(m_path.search_path(f"images/img.png")), size = (607,393))
+        images_path = ctk.CTkImage(light_image = Image.open(m_path.search_path(f"images/img.png")), size = (619,410))
         
         label_image = ctk.CTkLabel(master = m_app.app.FRAME_IMAGE,
                              image = images_path,
                              text = "")
         label_image.place(x = 5, y = 200, anchor = ctk.W)
         info_image()
-        # label_image.destroy()
 
 label_filters = ctk.CTkLabel(master = m_app.app.FRAME_LIST_IMAGES, text = "Оберіть фільтр:")
 label_filters.place(x=10,y=5)    
@@ -145,11 +150,6 @@ def get_selected_value():
     global label_image
     get_value = listbox.get(listbox.curselection())
     if get_value == values[0]:
-        # try:
-        #     image = Image.open("images/img.png")
-        # except IOError:
-        #     print("Unable to load image")
-        #     sys.exit(1)
         image = Image.open('images/img.png')
         grayscale = image.convert('L')
         image_tk = ImageTk.PhotoImage(grayscale)
@@ -222,41 +222,37 @@ def resize():
     
     label_image = ctk.CTkLabel(master = m_app.app.FRAME_IMAGE, text = "", image = tk_image)
     label_image.place(x = 20, y = 10)
+    
+
+# label_image = ctk.CTkLabel(master = m_app.app.FRAME_IMAGE, text = "")
+# label_image.place(x = 20, y = 10)
+
 current_index = 0
 def next_image():
     global current_index
-    current_index = current_index + 1 % len(list_url)
-    # download_image()
-    update_images()
-
-def previous_image():
-    global current_index
-    current_index = current_index - 1 % len(list_url)
-    # download_image()
-    update_images()
-    
-def update_images():
     global label_image
-    #расположение текста по иксу
-    textx = 10
-    # расположение текста по игрику
-    texty = 10
-    # перебираем все виджеты которые находяться на фрейме 
-    for widget in m_app.app.FRAME_IMAGE.winfo_children():
-        widget.destroy()
-    # перебираем все виджеты которые находяться на другом фрейме 
+    current_index = (current_index + 1) % len(list_url)
+    url = list_url[current_index]
+    response = requests.get(url)
+    image_data = response.content
+    image = Image.open(BytesIO(image_data))
+    tk_image = ImageTk.PhotoImage(image)
+    label_image.destroy()
+    label_image = ctk.CTkLabel(master = m_app.app.FRAME_IMAGE, text = "", image = tk_image)
+    label_image.place(x = 0, y = 0)
     
-    # for widget in m_app.app.FRAME_CURR_TRACK.winfo_children():
-    #     widget.destroy()
-    
-    # перебираем список и выводим изображения на фрейм
-    for i, image in enumerate(list_url):
-        label = ctk.CTkLabel(
-        master = m_app.app.FRAME_IMAGE, 
-        text = f"{image}", 
-        text_color = "black")
-        label.place(x = textx, y = texty)
-        texty = texty + 30
-    for link in list_url:
-        image = Image.open(url1) 
-        list_url.append(ImageTk.PhotoImage(image))
+def prev_image():
+    global current_index
+    global label_image
+    current_index = (current_index - 1) % len(list_url)
+    url = list_url[current_index]
+    response = requests.get(url)
+    image_data = response.content
+    image = Image.open(BytesIO(image_data))
+    tk_image = ImageTk.PhotoImage(image)
+    label_image.destroy()
+    label_image = ctk.CTkLabel(master = m_app.app.FRAME_IMAGE, text = "", image = tk_image)
+    label_image.place(x = 0, y = 0)
+
+label_image = ctk.CTkLabel(master = m_app.app.FRAME_IMAGE, text = "")
+label_image.place(x = 20, y = 10)

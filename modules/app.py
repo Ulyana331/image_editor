@@ -1,6 +1,6 @@
 import customtkinter as ctk
 import modules.frame as m_frame
-from PIL import Image, ImageDraw
+from PIL import ImageTk
 class App(ctk.CTk):
     def __init__(self, app_width, app_height):
         super().__init__()
@@ -40,7 +40,7 @@ class App(ctk.CTk):
         self.FRAME_IMAGE.place(x = 210, y = 20)
 
         self.canvas = ctk.CTkCanvas(self, width=200, height=100, bg = "#1E1E1E")
-        self.canvas.place(x=375, y=45)
+        self.canvas.place(x=1200, y=45)
 
         self.canvas.bind("<ButtonPress-1>", self.start_drawing)
         self.canvas.bind("<B1-Motion>", self.draw)
@@ -65,5 +65,7 @@ class App(ctk.CTk):
 
     def stop_drawing(self, event):
         self.drawing = False
-        
+    
 app = App(850, 500)
+
+app.iconbitmap('images/icon.ico')

@@ -14,7 +14,7 @@ button1 = ctk.CTkButton(
     text = "Обрізка фото",
     command = m_operation.crop_image
 )
-button1.place(x = 175, y = 438)
+button1.place(x = 210, y = 438)
 
 button2 = ctk.CTkButton(
     master = m_app.app,
@@ -27,7 +27,7 @@ button2 = ctk.CTkButton(
     text = "Зміна розміру",
     command = m_operation.resize
 )
-button2.place(x = 295, y = 438)
+button2.place(x = 330, y = 438)
 
 button3 = ctk.CTkButton(
     master = m_app.app,
@@ -37,10 +37,10 @@ button3 = ctk.CTkButton(
     border_color = "#E8900C",
     corner_radius = 15,
     fg_color = "#1E1E1E",
-    text = "Малювати",
-    # command = m_operation.draw_pictures
+    text = "Повернути фото",
+    command = m_operation.rotated
 )
-button3.place(x = 420, y = 438)
+button3.place(x = 460, y = 438)
 
 button4 = ctk.CTkButton(
     master = m_app.app,
@@ -53,7 +53,7 @@ button4 = ctk.CTkButton(
     text = "Писати",
     command = m_operation.write
 )
-button4.place(x = 535, y = 438)
+button4.place(x = 600, y = 438)
 
 button5 = ctk.CTkButton(
     master = m_app.app,
@@ -66,7 +66,7 @@ button5 = ctk.CTkButton(
     text = "Фільтри",
     command = m_operation.get_selected_value
 )
-button5.place(x = 650, y = 438)
+button5.place(x = 720, y = 438)
 
 button6 = ctk.CTkButton(
     master = m_app.app,
@@ -78,9 +78,9 @@ button6 = ctk.CTkButton(
     fg_color = "#D9D9D9",
     text = "<",
     text_color = "black",
-    command = m_operation.previous_image
+    command = m_operation.prev_image
 )
-button6.place(x = 428, y = 364)
+button6.place(x = 400, y = 364)
 
 button7 = ctk.CTkButton(
     master = m_app.app,
@@ -108,18 +108,5 @@ button8 = ctk.CTkButton(
     text = "Завантажити фото",
     command = m_operation.download_image
 )
-button8.place(x = 20,y = 438)
+button8.place(x = 50,y = 438)
 
-button_rotate = ctk.CTkButton(
-    master = m_app.app,
-    width = 30,
-    height = 30,
-    border_width = 5,
-    border_color = "#E8900C",
-    corner_radius = 15,
-    fg_color = "#1E1E1E",
-    text = "",
-    image = ctk.CTkImage(light_image=Image.open("images/rotate.png"),size = (30, 30)),
-    command = m_operation.rotated
-)
-button_rotate.place(x = 770,y = 438)
