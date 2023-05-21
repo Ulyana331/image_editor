@@ -261,6 +261,7 @@ image_height = 619
 image_width = 410
 class Draw_image(ctk.CTk):
     def __init__(self):
+        super().__init__()
         self.crop_active = False
         self.draw_active = False
         self.max_height = 619
@@ -269,6 +270,7 @@ class Draw_image(ctk.CTk):
         self.pencil_color = "red"
         self.current_image_size = (image_height, image_width)
         self.current_resized_image_size = (image.size[0], image.size[1])
+        self.image_canvas = ctk.CTkCanvas(self, bd=0, highlightbackground = "black", background = "black")
         self.lines_drawn = []
         self.image_x_co, self.image_y_co = (self.winfo_screenwidth() / 2) - image_width / 2, (
             self.max_height / 2) - image_height / 2
@@ -316,7 +318,7 @@ class Draw_image(ctk.CTk):
 
         self.point_x, self.point_y = event.x, event.y
 
-        self.image_canvas = ctk.CTkCanvas(self, bd=0, highlightbackground = "black", background = "black")       
+        # self.image_canvas = ctk.CTkCanvas(self, bd=0, highlightbackground = "black", background = "black")       
         self.image_canvas.bind('<B1-Motion>', self.draw_crop)
         self.image_canvas.bind("<ButtonPress-1>", self.get_mouse_pos)
         self.image_canvas.pack(fill="both", expand=True)
