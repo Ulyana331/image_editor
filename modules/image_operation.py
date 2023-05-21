@@ -274,7 +274,7 @@ class Draw_image(ctk.CTk):
         self.lines_drawn = []
         self.image_x_co, self.image_y_co = (self.winfo_screenwidth() / 2) - image_width / 2, (
             self.max_height / 2) - image_height / 2
-        self.image = "images/img.png"
+        self.image = image
         return image
     def draw_crop(self, event):
         if self.crop_active:
