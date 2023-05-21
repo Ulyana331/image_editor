@@ -90,6 +90,7 @@ button7 = ctk.CTkButton(
     border_color = "#E8900C",
     corner_radius = 15,
     fg_color = "#D9D9D9",
+    bg_color = "transparent",
     text = ">",
     text_color = "black",
     command = m_operation.next_image

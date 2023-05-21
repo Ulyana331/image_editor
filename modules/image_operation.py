@@ -256,3 +256,68 @@ def prev_image():
 
 label_image = ctk.CTkLabel(master = m_app.app.FRAME_IMAGE, text = "")
 label_image.place(x = 20, y = 10)
+
+image_height = 619
+image_width = 410
+class Draw_image(ctk.CTk):
+    def __init__(self):
+        self.crop_active = False
+        self.draw_active = False
+        self.max_height = 619
+        self.max_width = 410
+        self.pencil_size = 2
+        self.pencil_color = "red"
+        self.current_image_size = (image_height, image_width)
+        self.current_resized_image_size = (image.size[0], image.size[1])
+        self.lines_drawn = []
+        self.image_x_co, self.image_y_co = (self.winfo_screenwidth() / 2) - image_width / 2, (
+            self.max_height / 2) - image_height / 2
+        self.image = image
+        return image
+    def draw_crop(self, event):
+        if self.crop_active:
+            if not self.rectangles:
+                self.rectangles.append(self.rect)
+
+            image_width, image_height = self.current_resized_image_size[0], self.current_resized_image_size[1]
+            x_co_1, x_co_2 = int((self.winfo_screenwidth() / 2) - image_width/ 2), int(
+                (self.winfo_screenwidth() / 2) + image_width / 2)
+            y_co_1, y_co_2 = int(self.max_height / 2 - image_height / 2), int((self.max_height / 2) + image_height / 2)
+
+            if x_co_2 > event.x > x_co_1 and y_co_1 + 2 < event.y < y_co_2:
+                self.image_canvas.coords(self.rect, self.point_x, self.point_y, event.x, event.y)
+
+                self.event_x, self.event_y = event.x, event.y
+
+            elif self.draw_active:
+                image_width, image_height = self.current_resized_image_size[0], self.current_resized_image_size[1]
+                x_co_1, x_co_2 = int((self.winfo_screenwidth() / 2) - image_width / 2), int(
+                    (self.winfo_screenwidth() / 2) + image_width / 2)
+                y_co_1, y_co_2 = int(self.max_height / 2 - image_height / 2), int((self.max_height / 2) + image_height / 2)
+
+                if x_co_2 > self.point_x > x_co_1 and y_co_1 < self.point_y < y_co_2:
+                    if x_co_2 > event.x > x_co_1 and y_co_1 < event.y < y_co_2:
+                        lines = self.image_canvas.create_line(self.point_x, self.point_y, event.x, event.y,
+                                                              fill=self.pencil_color, width = self.pencil_size)
+                        
+                        x_co_1, y_co_1, x_co_2, y_co2 = ((self.point_x - self.image_x_co) * self.current_image_size[0])/self.current_resized_image_size[0], ((self.point_y - self.image_y_co)*self.current_image_size[1])/self.current_resized_image_size[1], ((event.x - self.image_x_co)*self.current_image_size[0])/self.current_resized_image_size[0], ((event.y - self.image_y_co)*self.current_image_size[1])/self.current_resized_image_size[1]
+                        img = ImageDraw.Draw(self.image)
+                        img.line([(x_co_1), (x_co_2)], fill = self.pencil_color, width = self.pencil_size + 1)
+
+                        self.lines_drawn.append(lines)
+                        self.point_x, self.point_y = event.x, event.y
+    def get_mouse_pos(self, event):
+        if not self.draw_active and self.crop_active:
+            if self.rect:
+                self.rectangles = []
+                self.image_canvas.delete(self.rect)
+
+            self.rect = self.image_canvas.create_rectangle(0,0,0,0, outline="black", width=3)
+
+        self.point_x, self.point_y = event.x, event.y
+
+        self.image_canvas = ctk.CTkCanvas(self, bd=0, highlightbackground = "black", background = "black")       
+        self.image_canvas.bind('<B1-Motion>', self.draw_crop)
+        self.image_canvas.bind("<ButtonPress-1>", self.get_mouse_pos)
+        self.image_canvas.pack(fill="both", expand=True)
+drawing = Draw_image()
