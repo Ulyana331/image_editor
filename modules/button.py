@@ -3,10 +3,10 @@ import modules.app as m_app
 import modules.image_operation as m_operation
 from PIL import Image
 
-button1 = ctk.CTkButton(
+button_crop = ctk.CTkButton(
     master = m_app.app,
-    width = 110,
-    height = 41,
+    width = 180,
+    height = 60,
     border_width = 5,
     border_color = "#E8900C",
     corner_radius = 15,
@@ -14,12 +14,12 @@ button1 = ctk.CTkButton(
     text = "Обрізка фото",
     command = m_operation.crop_image
 )
-button1.place(x = 210, y = 438)
+button_crop.place(x = 800, y = 600)
 
-button2 = ctk.CTkButton(
+button_resize = ctk.CTkButton(
     master = m_app.app,
-    width = 110,
-    height = 41,
+    width = 180,
+    height = 60,
     border_width = 5,
     border_color = "#E8900C",
     corner_radius = 15,
@@ -27,12 +27,12 @@ button2 = ctk.CTkButton(
     text = "Зміна розміру",
     command = m_operation.resize
 )
-button2.place(x = 330, y = 438)
+button_resize.place(x = 1000, y = 700)
 
-button3 = ctk.CTkButton(
+button_rotate = ctk.CTkButton(
     master = m_app.app,
-    width = 110,
-    height = 41,
+    width = 180,
+    height = 60,
     border_width = 5,
     border_color = "#E8900C",
     corner_radius = 15,
@@ -40,12 +40,12 @@ button3 = ctk.CTkButton(
     text = "Повернути фото",
     command = m_operation.rotated
 )
-button3.place(x = 460, y = 438)
+button_rotate.place(x = 1000, y = 600)
 
-button4 = ctk.CTkButton(
+button_write = ctk.CTkButton(
     master = m_app.app,
-    width = 110,
-    height = 41,
+    width = 180,
+    height = 60,
     border_width = 5,
     border_color = "#E8900C",
     corner_radius = 15,
@@ -53,12 +53,12 @@ button4 = ctk.CTkButton(
     text = "Писати",
     command = m_operation.write
 )
-button4.place(x = 600, y = 438)
+button_write.place(x = 1200, y = 700)
 
-button5 = ctk.CTkButton(
+button_filters = ctk.CTkButton(
     master = m_app.app,
-    width = 110,
-    height = 41,
+    width = 180,
+    height = 60,
     border_width = 5,
     border_color = "#E8900C",
     corner_radius = 15,
@@ -66,10 +66,10 @@ button5 = ctk.CTkButton(
     text = "Фільтри",
     command = m_operation.get_selected_value
 )
-button5.place(x = 720, y = 438)
+button_filters.place(x = 1200, y = 600)
 
-button6 = ctk.CTkButton(
-    master = m_app.app,
+button_prew = ctk.CTkButton(
+    master = m_app.app.FRAME_IMAGE,
     width = 70,
     height = 31,
     border_width = 5,
@@ -80,10 +80,10 @@ button6 = ctk.CTkButton(
     text_color = "black",
     command = m_operation.prev_image
 )
-button6.place(x = 400, y = 364)
+button_prew.place(x = 328, y = 530)
 
-button7 = ctk.CTkButton(
-    master = m_app.app,
+button_next = ctk.CTkButton(
+    master = m_app.app.FRAME_IMAGE,
     width = 70,
     height = 31,
     border_width = 5,
@@ -95,13 +95,13 @@ button7 = ctk.CTkButton(
     text_color = "black",
     command = m_operation.next_image
 )
-button7.place(x = 527, y = 364)
+button_next.place(x = 527, y = 530)
 
 
-button8 = ctk.CTkButton(
+button_download = ctk.CTkButton(
     master = m_app.app,
-    width = 110,
-    height = 41,
+    width = 180,
+    height = 60,
     border_width = 5,
     border_color = "#E8900C",
     corner_radius = 15,
@@ -109,5 +109,30 @@ button8 = ctk.CTkButton(
     text = "Завантажити фото",
     command = m_operation.download_image
 )
-button8.place(x = 50,y = 438)
+button_download.place(x = 800,y = 700)
 
+button_clear_frame = ctk.CTkButton(
+    master = m_app.app,
+    width = 180,
+    height = 60,
+    border_width = 5,
+    border_color = "#E8900C",
+    corner_radius = 15,
+    fg_color = "#1E1E1E",
+    text = "Очистити фрейм",
+    # command = m_operation.download_image
+)
+button_clear_frame.place(x = 600,y = 600)
+
+button_clear_image = ctk.CTkButton(
+    master = m_app.app,
+    width = 180,
+    height = 60,
+    border_width = 5,
+    border_color = "#E8900C",
+    corner_radius = 15,
+    fg_color = "#1E1E1E",
+    text = "Очистити фото",
+    # command = m_operation.download_image
+)
+button_clear_image.place(x = 600,y = 700)

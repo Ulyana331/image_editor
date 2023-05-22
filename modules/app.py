@@ -13,13 +13,13 @@ class App(ctk.CTk):
         self.title("Редактор зображень")
         self.FRAME_LIST_IMAGES = m_frame.My_Frame(text = "", 
                                                   master = self,
-                                                  width = 173, 
+                                                  width = 500, 
                                                   height = 100,
                                                   border_width = 5,
                                                   fg_color = "#1E1E1E",
                                                   border_color = "#E8900C",
                                                   corner_radius = 15)
-        self.FRAME_LIST_IMAGES.place(x = 20, y = 215)
+        self.FRAME_LIST_IMAGES.place(x = 20, y = 650)
         self.FRAME_INFO_IMAGE = m_frame.My_Frame(text = "", 
                                                   master = self,
                                                   width = 173, 
@@ -28,44 +28,15 @@ class App(ctk.CTk):
                                                   fg_color = "#1E1E1E",
                                                   border_color = "#E8900C",
                                                   corner_radius = 15)
-        self.FRAME_INFO_IMAGE.place(x = 20, y = 330)
+        self.FRAME_INFO_IMAGE.place(x = 20, y = 480)
         self.FRAME_IMAGE = m_frame.My_Frame(text = "", 
                                                   master = self,
-                                                  width = 619, 
-                                                  height = 405,
+                                                  width = 860, 
+                                                  height = 580,
                                                   border_width = 0,
                                                   fg_color = "#1E1E1E",
                                                   border_color = "#1E1E1E",
                                                   corner_radius = 15)
-        self.FRAME_IMAGE.place(x = 210, y = 20)
+        self.FRAME_IMAGE.place(x = 570, y = 10)
 
-        self.canvas = ctk.CTkCanvas(self, width=200, height=100, bg = "#1E1E1E")
-        self.canvas.place(x=1200, y=45)
-
-        self.canvas.bind("<ButtonPress-1>", self.start_drawing)
-        self.canvas.bind("<B1-Motion>", self.draw)
-        self.canvas.bind("<ButtonRelease-1>", self.stop_drawing)
-
-        self.start_x = None
-        self.start_y = None
-        self.drawing = False
-
-    def start_drawing(self, event):
-        self.start_x = event.x
-        self.start_y = event.y
-        self.drawing = True
-
-    def draw(self, event):
-        if self.drawing:
-            current_x = event.x
-            current_y = event.y
-            self.canvas.create_line(self.start_x, self.start_y, current_x, current_y, fill="white")
-            self.start_x = current_x
-            self.start_y = current_y
-
-    def stop_drawing(self, event):
-        self.drawing = False
-    
-app = App(850, 500)
-
-app.iconbitmap('images/icon.ico')
+app = App(1450, 840)
