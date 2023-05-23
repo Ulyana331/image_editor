@@ -7,6 +7,7 @@ import modules.path as m_path
 from tkinter import Listbox, END
 import modules.font as m_font
 from io import BytesIO
+import os
 
 # Получаем информацию по изображению (формат)
 label_information = ctk.CTkLabel(master = m_app.app, font = m_font.font_label, text = "Інформація фотографіЇ:")
@@ -59,24 +60,23 @@ def write():
     label_image.place(x = 5, y = 0)
 
 def rotated():
-    global image
-    global label_image
-    global tk_image
-    label_image = ctk.CTkLabel(master = m_app.app.FRAME_IMAGE, text = "")
-    label_image.place(x = 20, y = 10)
-    try:
-        image = Image.open("images/img.png")
-    except IOError:
-        print("Unable to load image")
-        sys.exit(1)
-        
-    image = image.rotate(180, expand = True)
-    image.save('images/img.png')
+    image = Image.open("images/img.jpg")
+    image = image.resize((1500, 900))
     tk_image = ImageTk.PhotoImage(image)
+    canvas = ctk.CTkCanvas(m_app.app.FRAME_IMAGE, width = 1500, height = 900, bg = "#1E1E1E")
+    canvas.create_image(0,0, anchor = "nw", image = tk_image)
+    canvas.place(x = 0, y = 0)
 
-    label_image = ctk.CTkLabel(master = m_app.app.FRAME_IMAGE, text = "", image = tk_image)
-    label_image.place(x = 5, y = 200, anchor = ctk.W)
+    rotated_image = image.rotate(180)
 
+    rotated_image.save("images/rotated_img.png")
+    image_r = Image.open("images/rotated_img.png")
+    image = image_r.resize((1500, 900))
+    tk_image_r = ImageTk.PhotoImage(image_r)
+    canvas = ctk.CTkCanvas(m_app.app.FRAME_IMAGE, width = 1500, height = 900, bg = "#1E1E1E")
+    canvas.create_image(0,0, anchor = "nw", image = tk_image_r)
+    canvas.place(x = 0, y = 0)
+    canvas.itemconfig(canvas, image = ImageTk.PhotoImage(rotated_image))
 
 # функция написания текста на экране
 text2 = ctk.StringVar()
@@ -115,6 +115,7 @@ count = 1
 def download_image():
     global canvas
     global url1
+    global count
     url1 = text.get()
     try:
         req = requests.get(url1, stream = True).raw
@@ -123,12 +124,14 @@ def download_image():
         print(list_url)
     except:
         print("Unable to load image from URL")
-    
+
+    image.save(f"images/original_image.jpg")
     image = image.resize((1500,900))
     tk_image = ImageTk.PhotoImage(image)
     canvas = ctk.CTkCanvas(m_app.app.FRAME_IMAGE, width = 1500, height = 900, bg = "#1E1E1E")
     canvas.create_image(0, 0, anchor = "nw", image = tk_image)
     canvas.place(x = 0, y = 0)
+    count += 1
     canvas.data = {}
     def start_drawing(event):
         canvas.data["line_start"] = (event.x, event.y)
@@ -136,11 +139,21 @@ def download_image():
         if "line_start" in canvas.data:
             start = canvas.data["line_start"]
             end = (event.x, event.y)
-            canvas.create_line(start[0], start[1], end[0], end[1], fill = "red", width = 5)
+            canvas.create_line(start[0], start[1], end[0], end[1], fill = "red", width = 5, tags = "drawing")
             canvas.data["line_start"] = end
     canvas.bind("<Button-1>", start_drawing)
     canvas.bind("<B1-Motion>", draw_stick)
     canvas.bind("<ButtonRelease-1>", lambda event: canvas.data.pop("line_start", None))
+
+    image.save(f"images/img{count}.jpg","jpeg")
+    count += 1
+    list_name_image = []
+    list_name_image.append(f"images/img{count}.jpg")
+    # print(list_name_image)
+    # list_box_images = Listbox(m_app.app, bg = "#1E1E1E", fg = "white")
+    # for i in list_name_image:
+    #     list_box_images.insert(END,i)
+    # list_box_images.place(x = 15, y = 700)
     info_image()
 
 def get_selected_value():
@@ -211,16 +224,25 @@ label = ctk.CTkLabel(master = m_app.app, text = "Введіть розміри:"
 label.place(x = 15, y = 95)
 
 def resize():
-    global label_image
     height = entry_height.get()
     width = entry_width.get()
-    label_image.destroy()
-    image = Image.open("images/img.png")
+    image = Image.open("images/img.jpg")
+    image = image.resize((1500, 900))
+    tk_image1 = ImageTk.PhotoImage(image)
+    canvas = ctk.CTkCanvas(m_app.app.FRAME_IMAGE, width = 1500, height = 900, bg = "#1E1E1E")
+    canvas.create_image(0,0, anchor = "nw", image = tk_image)
+    canvas.place(x = 0, y = 0)
+
     resized = image.resize((width, height), Image.ANTIALIAS)
     tk_image = ImageTk.PhotoImage(resized)
+
+    image = Image.open("images/img.jpg")
+    image1 = image.resize((1500, 900))
+    tk_image = ImageTk.PhotoImage(image1)
+    canvas = ctk.CTkCanvas(m_app.app.FRAME_IMAGE, width = 1500, height = 900, bg = "#1E1E1E")
+    canvas.create_image(0,0, anchor = "nw", image = tk_image)
+    canvas.place(x = 0, y = 0)
     
-    label_image = ctk.CTkLabel(master = m_app.app.FRAME_IMAGE, text = "", image = tk_image)
-    label_image.place(x = 20, y = 10)
     
 
 # label_image = ctk.CTkLabel(master = m_app.app.FRAME_IMAGE, text = "")
@@ -256,3 +278,10 @@ def prev_image():
 label_filters = ctk.CTkLabel(master = m_app.app, text = "Оберіть фільтр:", font = m_font.font_label)
 label_filters.place(x=10,y=280)    
 
+def clear_frame():
+    buttons = [widget for widget in m_app.app.FRAME_IMAGE.winfo_children() if isinstance(widget,ctk.CTkButton)]
+    for widget in m_app.app.FRAME_IMAGE.winfo_children():
+        if widget not in buttons:
+            widget.destroy()
+def clear_drawing():
+    canvas.delete("drawing")

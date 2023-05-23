@@ -2,6 +2,7 @@ import customtkinter as ctk
 import modules.app as m_app
 import modules.image_operation as m_operation
 from PIL import Image
+import modules.font as m_font
 
 button_crop = ctk.CTkButton(
     master = m_app.app,
@@ -12,9 +13,10 @@ button_crop = ctk.CTkButton(
     corner_radius = 15,
     fg_color = "#1E1E1E",
     text = "Обрізка фото",
+    font = m_font.font_buttons,
     command = m_operation.crop_image
 )
-button_crop.place(x = 800, y = 600)
+button_crop.place(x = 770, y = 600)
 
 button_resize = ctk.CTkButton(
     master = m_app.app,
@@ -25,6 +27,7 @@ button_resize = ctk.CTkButton(
     corner_radius = 15,
     fg_color = "#1E1E1E",
     text = "Зміна розміру",
+    font = m_font.font_buttons,
     command = m_operation.resize
 )
 button_resize.place(x = 1000, y = 700)
@@ -38,6 +41,7 @@ button_rotate = ctk.CTkButton(
     corner_radius = 15,
     fg_color = "#1E1E1E",
     text = "Повернути фото",
+    font = m_font.font_buttons,
     command = m_operation.rotated
 )
 button_rotate.place(x = 1000, y = 600)
@@ -51,6 +55,7 @@ button_write = ctk.CTkButton(
     corner_radius = 15,
     fg_color = "#1E1E1E",
     text = "Писати",
+    font = m_font.font_buttons,
     command = m_operation.write
 )
 button_write.place(x = 1200, y = 700)
@@ -64,6 +69,7 @@ button_filters = ctk.CTkButton(
     corner_radius = 15,
     fg_color = "#1E1E1E",
     text = "Фільтри",
+    font = m_font.font_buttons,
     command = m_operation.get_selected_value
 )
 button_filters.place(x = 1200, y = 600)
@@ -107,9 +113,10 @@ button_download = ctk.CTkButton(
     corner_radius = 15,
     fg_color = "#1E1E1E",
     text = "Завантажити фото",
+    font = m_font.font_buttons,
     command = m_operation.download_image
 )
-button_download.place(x = 800,y = 700)
+button_download.place(x = 770,y = 700)
 
 button_clear_frame = ctk.CTkButton(
     master = m_app.app,
@@ -120,9 +127,10 @@ button_clear_frame = ctk.CTkButton(
     corner_radius = 15,
     fg_color = "#1E1E1E",
     text = "Очистити фрейм",
-    # command = m_operation.download_image
+    font = m_font.font_buttons,
+    command = m_operation.clear_frame
 )
-button_clear_frame.place(x = 600,y = 600)
+button_clear_frame.place(x = 570,y = 600)
 
 button_clear_image = ctk.CTkButton(
     master = m_app.app,
@@ -133,6 +141,7 @@ button_clear_image = ctk.CTkButton(
     corner_radius = 15,
     fg_color = "#1E1E1E",
     text = "Очистити фото",
-    # command = m_operation.download_image
+    font = m_font.font_buttons,
+    command = m_operation.clear_drawing
 )
-button_clear_image.place(x = 600,y = 700)
+button_clear_image.place(x = 570,y = 700)
