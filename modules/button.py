@@ -145,3 +145,17 @@ button_clear_image = ctk.CTkButton(
     command = m_operation.clear_drawing
 )
 button_clear_image.place(x = 570,y = 700)
+
+button_download_2 = ctk.CTkButton(
+    master = m_app.app,
+    width = 180,
+    height = 60,
+    border_width = 5,
+    border_color = "#E8900C",
+    corner_radius = 15,
+    fg_color = "#1E1E1E",
+    text = "Завантажити фото з ПК",
+    font = m_font.font_buttons,
+    command = m_operation.download
+)
+button_download_2.place(x = 300,y = 700)
