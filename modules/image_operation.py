@@ -15,33 +15,39 @@ label_information.place(x = 15, y = 440)
 label_information = ctk.CTkLabel(master = m_app.app, font = m_font.font_label, text = "Список зображень:")
 label_information.place(x = 15, y = 600)
 
-def info_image(canvas, image_id):
+def info_image():
+    # image = Image.open("images/original_image.jpg")
+    # image = image.resize((1500,900))
+    # tk_image = ImageTk.PhotoImage(image)
+    # canvas = ctk.CTkCanvas(m_app.app.FRAME_IMAGE, width = 1500, height = 900, bg = "#1E1E1E")
+    # canvas.create_image(0, 0, anchor = "nw", image = tk_image)
+    # canvas.place(x = 0, y = 0)
+    
     image_format = image.format
     label_info = ctk.CTkLabel(master = m_app.app.FRAME_INFO_IMAGE, font = m_font.font_info, text = "Format: {}".format(image_format))
-    label_info.place(x = 10, y = 28)
+    label_info.place(x = 10, y = 20)
 
     # Получаем информацию по изображению (высота и ширина)
     width, height = image.size
     label_info = ctk.CTkLabel(master = m_app.app.FRAME_INFO_IMAGE, font = m_font.font_info, text = "width:{} height:{}".format(width, height))
-    label_info.place(x = 8, y = 55)
+    label_info.place(x = 8, y = 48)
 
 
-def crop_image():
-    image = Image.open("images/original_image.jpg")
-    image = image.resize((1500,900))
-    tk_image = ImageTk.PhotoImage(image)
-    canvas = ctk.CTkCanvas(m_app.app.FRAME_IMAGE, width = 1500, height = 900, bg = "#1E1E1E")
-    canvas.create_image(0, 0, anchor = "nw", image = tk_image)
-    canvas.place(x = 0, y = 0)
+# def crop_image():
+#     image = Image.open("images/original_image.jpg")
+#     image = image.resize((1500,900))
+#     tk_image = ImageTk.PhotoImage(image)
+#     canvas = ctk.CTkCanvas(m_app.app.FRAME_IMAGE, width = 1500, height = 900, bg = "#1E1E1E")
+#     canvas.create_image(0, 0, anchor = "nw", image = tk_image)
+#     canvas.place(x = 0, y = 0)
 
-    image_c = image.crop((100, 100, 400, 300))
+#     # image_c = image.crop((x1, y1, x2, y2))
 
-    tk_image_c = ImageTk.PhotoImage(image_c)
-    canvas = ctk.CTkCanvas(m_app.app.FRAME_IMAGE, width = 1500, height = 900, bg = "#1E1E1E")
-    canvas.create_image(0, 0, anchor = "nw", image = tk_image_c)
-    canvas.place(x = 0, y = 0)
-    image_c.save("iamges/cropped_image.jpg")
-
+#     tk_image_c = ImageTk.PhotoImage(image_c)
+#     canvas = ctk.CTkCanvas(m_app.app.FRAME_IMAGE, width = 1500, height = 900, bg = "#1E1E1E")
+#     canvas.create_image(0, 0, anchor = "nw", image = tk_image_c)
+#     canvas.place(x = 0, y = 0)
+#     image_c.save("iamges/cropped_image.jpg")
 
 def write():
     image = Image.open("images/original_image.jpg")
@@ -76,11 +82,14 @@ def rotated():
 
     image_r = image.rotate(180)
 
+    image_r = Image.open("images/rotated_image.jpg")
     tk_image_r = ImageTk.PhotoImage(image_r)
     canvas = ctk.CTkCanvas(m_app.app.FRAME_IMAGE, width = 1500, height = 900, bg = "#1E1E1E")
     canvas.create_image(0, 0, anchor = "nw", image = tk_image_r)
     canvas.place(x = 0, y = 0)
-    image_r.save("images/rotated_image.jpg")
+    image_r = Image.open("images/rotated_image_2.jpg")
+
+
 
 # функция написания текста на экране
 text2 = ctk.StringVar()
@@ -156,20 +165,22 @@ def get_selected_value():
     global label_image
     get_value = listbox.get(listbox.curselection())
     if get_value == values[0]:
-        image = Image.open('images/original_image.jpg')
+        image = Image.open("images/original_image.jpg")
         image = image.resize((1500,900))
         tk_image = ImageTk.PhotoImage(image)
         canvas = ctk.CTkCanvas(m_app.app.FRAME_IMAGE, width = 1500, height = 900, bg = "#1E1E1E")
         canvas.create_image(0, 0, anchor = "nw", image = tk_image)
         canvas.place(x = 0, y = 0)
 
+
         image_g = image.convert('L')
+        image_g.save("images/gray_image.jpg")
 
         tk_image_g = ImageTk.PhotoImage(image_g)
         canvas = ctk.CTkCanvas(m_app.app.FRAME_IMAGE, width = 1500, height = 900, bg = "#1E1E1E")
         canvas.create_image(0, 0, anchor = "nw", image = tk_image_g)
         canvas.place(x = 0, y = 0)
-        image_g.save("images/gray_image.jpg")
+        image_g = Image.open("images/gray_image_2.jpg")
 
     if get_value == values[1]:
         image = Image.open('images/original_image.jpg')
@@ -180,12 +191,13 @@ def get_selected_value():
         canvas.place(x = 0, y = 0)
 
         image_b = image.filter(ImageFilter.BLUR)
+        image_b.save("images/blurred_image.jpg")
 
         tk_image_b = ImageTk.PhotoImage(image_b)
         canvas = ctk.CTkCanvas(m_app.app.FRAME_IMAGE, width = 1500, height = 900, bg = "#1E1E1E")
         canvas.create_image(0, 0, anchor = "nw", image = tk_image_b)
         canvas.place(x = 0, y = 0)
-        image_b.save("images/blurred_image.jpg")
+        image_b = Image.open("images/blurred_image_2.jpg")
         
 
     if get_value == values[2]:
@@ -197,12 +209,13 @@ def get_selected_value():
         canvas.place(x = 0, y = 0)
 
         image_d = image.filter(ImageFilter.DETAIL)
+        image_d.save("images/detailed_image.jpg")
 
         tk_image_d = ImageTk.PhotoImage(image_d)
         canvas = ctk.CTkCanvas(m_app.app.FRAME_IMAGE, width = 1500, height = 900, bg = "#1E1E1E")
         canvas.create_image(0, 0, anchor = "nw", image = tk_image_d)
         canvas.place(x = 0, y = 0)
-        image_d.save("images/blurred_image.jpg")
+        image_d = Image.open("images/detailed_image_3.jpg")
         
        
 
@@ -259,32 +272,39 @@ def resize():
     image_r.save("images/resized_image.jpg")
 
 
+
+
 current_index = 0
+def show_image(index):
+    global current_index
+    # Проверить, что индекс находится в допустимом диапазоне
+    canvas = ctk.CTkCanvas(m_app.app.FRAME_IMAGE, width = 1500, height = 900, bg = "#1E1E1E")
+    canvas.place(x = 0, y = 0)
+    if 0 <= index < len(list_url):
+        # Очистить canvas
+        canvas.delete("all")
+
+        image = Image.open("images/original_image.jpg")
+        image = image.resize((1500,900))
+        tk_image = ImageTk.PhotoImage(image)
+        canvas = ctk.CTkCanvas(m_app.app.FRAME_IMAGE, width = 1500, height = 900, bg = "#1E1E1E")
+        canvas.create_image(0, 0, anchor = "nw", image = tk_image)
+        canvas.place(x = 0, y = 0)
+        # Обновить текущий индекс
+        current_index = index
+
 def next_image():
     global current_index
-    global label_image
-    current_index = (current_index + 1) % len(list_url)
-    url = list_url[current_index]
-    response = requests.get(url)
-    image_data = response.content
-    image = Image.open(BytesIO(image_data))
-    tk_image = ImageTk.PhotoImage(image)
-    label_image.destroy()
-    label_image = ctk.CTkLabel(master = m_app.app.FRAME_IMAGE, text = "", image = tk_image)
-    label_image.place(x = 0, y = 0)
-    
+    # Переключиться на следующую картинку
+    show_image(current_index + 1)
+
 def prev_image():
     global current_index
-    global label_image
-    current_index = (current_index - 1) % len(list_url)
-    url = list_url[current_index]
-    response = requests.get(url)
-    image_data = response.content
-    image = Image.open(BytesIO(image_data))
-    tk_image = ImageTk.PhotoImage(image)
-    label_image.destroy()
-    label_image = ctk.CTkLabel(master = m_app.app.FRAME_IMAGE, text = "", image = tk_image)
-    label_image.place(x = 0, y = 0)
+    # Переключиться на предыдущую картинку
+    show_image(current_index - 1)
+
+
+
 
 label_filters = ctk.CTkLabel(master = m_app.app, text = "Оберіть фільтр:", font = m_font.font_label)
 label_filters.place(x=10,y=280)    
@@ -311,3 +331,32 @@ def download():
         current_index_d += 1
 listbox_images = Listbox(m_app.app, width = 20, height = 7, font = m_font.font_list,bg = "#1E1E1E", fg = "white")  
 listbox_images.place(x = 50,y = 1150)
+
+
+
+def get_selected_area():
+    image = Image.open("images/original_image.jpg")
+    image = image.resize((1500,900))
+    tk_image = ImageTk.PhotoImage(image)
+    canvas = ctk.CTkCanvas(m_app.app.FRAME_IMAGE, width = 1500, height = 900, bg = "#1E1E1E")
+    canvas.create_image(0, 0, anchor = "nw", image = tk_image)
+    canvas.place(x = 0, y = 0)
+
+    selected_tags = canvas.gettags("sel")
+
+    if selected_tags:
+        x1 = int(selected_tags[0])
+        y1 = int(selected_tags[1])
+        x2 = int(selected_tags[2])
+        y2 = int(selected_tags[3])
+        print(f"Selected area: x1={x1}, y1={y1}, x2={x2}, y2={y2}")
+    else:
+        print("No area selected.")
+
+canvas = ctk.CTkCanvas(m_app.app, width=400, height=300)
+
+# Bind the mouse button release event to the function
+canvas.bind("<ButtonRelease-1>", lambda event: get_selected_area())
+
+# Pack the canvas
+canvas.pack()
