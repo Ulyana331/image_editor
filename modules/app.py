@@ -11,18 +11,10 @@ class App(ctk.CTk):
         self.geometry(f"{self.APP_WIDTH}x{self.APP_HEIGHT}+{0}+{0}")
         self.resizable(False, False)
         self.title("Редактор зображень")
-        # self.FRAME_LIST_IMAGES = m_frame.My_Frame(text = "", 
-        #                                           master = self,
-        #                                           width = 500, 
-        #                                           height = 100,
-        #                                           border_width = 5,
-        #                                           fg_color = "#1E1E1E",
-        #                                           border_color = "#E8900C",
-        #                                           corner_radius = 15)
-        # self.FRAME_LIST_IMAGES.place(x = 20, y = 650)
+        self.wm_iconbitmap('images/icon.ico')
         self.FRAME_INFO_IMAGE = m_frame.My_Frame(text = "", 
                                                   master = self,
-                                                  width = 173, 
+                                                  width = 175, 
                                                   height = 90,
                                                   border_width = 5,
                                                   fg_color = "#1E1E1E",
