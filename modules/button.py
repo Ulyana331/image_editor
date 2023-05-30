@@ -12,11 +12,11 @@ button_crop = ctk.CTkButton(
     border_color = "#E8900C",
     corner_radius = 15,
     fg_color = "#1E1E1E",
-    text = "Обрізка фото",
+    text = "Виділити область",
     font = m_font.font_buttons,
-    command = m_operation.crop_image
+    command = m_operation.crop_image_2
 )
-button_crop.place(x = 770, y = 600)
+button_crop.place(x = 800, y = 600)
 
 button_resize = ctk.CTkButton(
     master = m_app.app,
@@ -30,7 +30,7 @@ button_resize = ctk.CTkButton(
     font = m_font.font_buttons,
     command = m_operation.resize
 )
-button_resize.place(x = 1000, y = 700)
+button_resize.place(x = 1030, y = 700)
 
 button_rotate = ctk.CTkButton(
     master = m_app.app,
@@ -42,9 +42,9 @@ button_rotate = ctk.CTkButton(
     fg_color = "#1E1E1E",
     text = "Повернути фото",
     font = m_font.font_buttons,
-    command = m_operation.rotated
+    command = m_operation.rotate
 )
-button_rotate.place(x = 1000, y = 600)
+button_rotate.place(x = 1030, y = 600)
 
 button_write = ctk.CTkButton(
     master = m_app.app,
@@ -58,9 +58,9 @@ button_write = ctk.CTkButton(
     font = m_font.font_buttons,
     command = m_operation.write
 )
-button_write.place(x = 1200, y = 700)
+button_write.place(x = 1230, y = 700)
 
-button_filters = ctk.CTkButton(
+button_draw = ctk.CTkButton(
     master = m_app.app,
     width = 180,
     height = 60,
@@ -68,11 +68,11 @@ button_filters = ctk.CTkButton(
     border_color = "#E8900C",
     corner_radius = 15,
     fg_color = "#1E1E1E",
-    text = "Фільтри",
+    text = "Малювати",
     font = m_font.font_buttons,
-    command = m_operation.get_selected_value
+    command = m_operation.draw_on_picture
 )
-button_filters.place(x = 1200, y = 600)
+button_draw.place(x = 1230, y = 600)
 
 button_prew = ctk.CTkButton(
     master = m_app.app.FRAME_IMAGE,
@@ -116,7 +116,7 @@ button_download = ctk.CTkButton(
     font = m_font.font_buttons,
     command = m_operation.download_image
 )
-button_download.place(x = 770,y = 700)
+button_download.place(x = 800,y = 700)
 
 button_clear_frame = ctk.CTkButton(
     master = m_app.app,
@@ -130,7 +130,7 @@ button_clear_frame = ctk.CTkButton(
     font = m_font.font_buttons,
     command = m_operation.clear_frame
 )
-button_clear_frame.place(x = 570,y = 600)
+button_clear_frame.place(x = 600,y = 600)
 
 button_clear_image = ctk.CTkButton(
     master = m_app.app,
@@ -144,7 +144,7 @@ button_clear_image = ctk.CTkButton(
     font = m_font.font_buttons,
     command = m_operation.clear_drawing
 )
-button_clear_image.place(x = 570,y = 700)
+button_clear_image.place(x = 600,y = 700)
 
 button_download_2 = ctk.CTkButton(
     master = m_app.app,
@@ -154,8 +154,8 @@ button_download_2 = ctk.CTkButton(
     border_color = "#E8900C",
     corner_radius = 15,
     fg_color = "#1E1E1E",
-    text = "Завантажити фото з ПК",
+    text = "Завантажити з ПК",
     font = m_font.font_buttons,
     command = m_operation.download
 )
-button_download_2.place(x = 300,y = 700)
+button_download_2.place(x = 380,y = 700)

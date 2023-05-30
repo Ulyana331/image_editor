@@ -14,7 +14,7 @@ class App(ctk.CTk):
         self.wm_iconbitmap('images/icon.ico')
         self.FRAME_INFO_IMAGE = m_frame.My_Frame(text = "", 
                                                   master = self,
-                                                  width = 175, 
+                                                  width = 220, 
                                                   height = 90,
                                                   border_width = 5,
                                                   fg_color = "#1E1E1E",
@@ -30,5 +30,14 @@ class App(ctk.CTk):
                                                   border_color = "#1E1E1E",
                                                   corner_radius = 15)
         self.FRAME_IMAGE.place(x = 570, y = 10)
+        self.FRAME_LISTBOX = m_frame.My_Frame(text = "", 
+                                                  master = self,
+                                                  width = 110, 
+                                                  height = 120,
+                                                  border_width = 5,
+                                                  fg_color = "#1E1E1E",
+                                                  border_color = "#E8900C",
+                                                  corner_radius = 15)
+        self.FRAME_LISTBOX.place(x = 10, y = 320)
 
 app = App(1450, 840)
