@@ -148,6 +148,7 @@ def rotate():
 
 current_index_d = 0
 list_name_image = []
+
 def download():
     global current_index_d
     global count 
